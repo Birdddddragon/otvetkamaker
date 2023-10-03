@@ -1,9 +1,26 @@
 from PIL import Image
 
-otvetkabase = Image.open("otvetkabase2.png")
+typeimage = input("Фон ответки (D(discord),Y(youtube,белая тема),S(steam) ): ")
+
+otvetkatype = Image.open("otvetkabased.png")
+
+if typeimage == "d" or typeimage == "D":
+    print("D")
+    otvetkatype = Image.open("otvetkabased.png")
+elif typeimage == "y" or typeimage == "Y":
+    print("Y")
+    otvetkatype = Image.open("otvetkabasey.png")
+elif typeimage == "s" or typeimage == "S":
+    print("S")
+    otvetkatype = Image.open("otvetkabases.png")
+else:
+    print("Некорректный тип (выбран стандартный (D) )")
+    otvetkatype = Image.open("otvetkabased.png")
+
+otvetkabase = otvetkatype
 w, h = otvetkabase.size
 
-print ("Напишите название файла, файл должен быть в той-же папка что и exe!")
+print ("Напишите название файла, (файл должен быть в той-же папка что и exe)")
 filename = input(": ")
 
 filename2 = Image.open(filename)
@@ -21,13 +38,17 @@ wb, hb = back.size
 
 otvetkabase = otvetkabase.resize((w2,h))
 
-
 back.paste(filename2,(0, h3 - h2))
 back.paste(otvetkabase)
 
-otvetkabase = otvetkabase.convert('RGBA')
-back = back.convert('RGBA')
 
-back = back.save("temp.png","PNG")
+otvetkaD = "temp.png"
 
-input()
+convertq = input("Конвертировать .png в .gif? (y or n): ")
+if convertq == "y" or convertq == "Y":
+    otvetkaD = "temp.gif"
+elif convertq == "n" or convertq == "N":
+    otvetkaD = "temp.png"
+else:
+    print("Некорректный ответ")
+back = back.save(otvetkaD)  
